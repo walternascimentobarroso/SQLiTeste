@@ -4,6 +4,12 @@ if((!isset ($_SESSION['logado']) == true)) {
 	unset($_SESSION['logado']);
 	header('location:index.php');
 }
+
+$DB = new PDO("mysql:host=localhost;dbname=testeSQLi", "root", "123"); 
+#var_dump($_GET);
+$sql = "SELECT * FROM usuario;";
+$result = $DB->query($sql);
+$resultado = $result->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,10 +18,10 @@ if((!isset ($_SESSION['logado']) == true)) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="favicon.ico">
 
     <title>Dashboard</title>
-
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
@@ -71,36 +77,22 @@ if((!isset ($_SESSION['logado']) == true)) {
                 </tr>
               </thead>
               <tbody>
+                <?php foreach($resultado as $item): ?>
                 <tr>
-                  <td>1</td>
-                  <td>Logjin</td>
-                  <td>editar | excluir</td>
+                  <td><?= $item['id']; ?></td>
+                  <td><?= $item['login']; ?></td>
+                  <td><a href='userlist.php?id=<?= $item['id']; ?>'><i class="text-info fa fa-eye" aria-hidden="true"></i></a> | <i class="text-warning fa fa-pencil-square-o" aria-hidden="true"></i> | <i class="text-danger fa fa-trash" aria-hidden="true"></i></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Logjin</td>
-                  <td>editar | excluir</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Logjin</td>
-                  <td>editar | excluir</td>
-                </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>
         </main>
       </div>
     </div>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   </body>
 </html>

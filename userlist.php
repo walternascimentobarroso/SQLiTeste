@@ -4,6 +4,13 @@ if((!isset ($_SESSION['logado']) == true)) {
 	unset($_SESSION['logado']);
 	header('location:index.php');
 }
+
+$DB = new PDO("mysql:host=localhost;dbname=testeSQLi", "root", "123"); 
+$id = $_GET['id'];
+#var_dump($_GET);
+$sql = "SELECT * FROM usuario WHERE id=$id ;";
+$result = $DB->query($sql);
+$resultado = $result->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,7 +22,7 @@ if((!isset ($_SESSION['logado']) == true)) {
     <link rel="icon" href="favicon.ico">
 
     <title>Dashboard</title>
-
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
@@ -32,9 +39,7 @@ if((!isset ($_SESSION['logado']) == true)) {
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="sair.php">Sair</a>
-          </li>
+          <a class="nav-link" href="sair.php">Sair</a>
         </ul>
         <form class="form-inline mt-2 mt-md-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Pesquisar">
@@ -48,10 +53,10 @@ if((!isset ($_SESSION['logado']) == true)) {
         <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Inicio <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="dashboard.php">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="usuarios.php">Usuario</a>
+              <a class="nav-link active" href="#">Usuário <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Produtos</a>
@@ -60,37 +65,27 @@ if((!isset ($_SESSION['logado']) == true)) {
         </nav>
 
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-          <h1>Dashboard</h1>
+          <h1>Usuários</h1>
 
-          <section class="row text-center placeholders">
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <div class="text-muted">Something else</div>
+          <div class="card" style="width: 20rem;">
+            <img class="card-img-top" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="Card image cap">
+            <div class="card-block">
+              <h4 class="card-title"><?= $resultado[0]['login']; ?></h4>
+              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
             </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Rua: S1</li>
+              <li class="list-group-item">Bairro: Centro</li>
+              <li class="list-group-item">Telefone: (95) 99123-4398</li>
+            </ul>
+            <div class="card-block">
+              <a href="#" class="card-link">Voltar</a>
+              <a href="#" class="card-link">Editar</a>
             </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-          </section>
+          </div>
         </main>
       </div>
     </div>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
