@@ -1,9 +1,9 @@
 <?php
-session_start();
-if((!isset ($_SESSION['logado']) == true)) {
-	unset($_SESSION['logado']);
-	header('location:index.php');
-}
+// session_start();
+// if((!isset ($_SESSION['logado']) == true)) {
+// 	unset($_SESSION['logado']);
+// 	header('location:index.php');
+// }
 
 $DB = new PDO("mysql:host=localhost;dbname=testeSQLi", "root", "123"); 
 $id = $_GET['id'];
